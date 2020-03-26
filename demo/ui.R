@@ -4,7 +4,7 @@ library(shiny)
 shinyUI(pageWithSidebar(
   
   # Application title
-  headerPanel("This is the demo app code!"),
+  headerPanel("This code has been updated!"),
   
   # Sidebar with a slider input for number of observations
   sidebarPanel(
