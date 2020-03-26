@@ -1,0 +1,25 @@
+steps:
+  # Build base image first
+  - name: "gcr.io/cloud-builders/docker"
+    id: "build-base"
+    args:
+      [
+        "build",
+        "-t",
+        "eu.gcr.io/ace-apps-dev/demo:prod",
+        "-f",
+        "Dockerfile",
+        ".",
+      ]
+  - name: "gcr.io/cloud-builders/docker"
+    args: ["push", "eu.gcr.io/ace-apps-dev/demo:prod"]
+  # Trigger the restart on the compute instance
+  - name: "gcr.io/cloud-builders/gcloud"
+    args:
+      - compute
+      - ssh
+      - root@dev-instance
+      - --zone
+      - europe-west1-b
+      - --command
+      - "sh /restart_server.sh prod"
